@@ -46,6 +46,7 @@ router.post('/', async (req, res) => {
     const createProduct = await Product.create(req.body);
 
     if (req.body.tagIds.length) {
+     
       const productTagIdArr = req.body.tagIds.map((tag_id) => {
         return {
           product_id: createProduct.id,
