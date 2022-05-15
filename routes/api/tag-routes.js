@@ -35,11 +35,13 @@ router.post('/', async (req, res) => {
 
     const createTag = await Tag.create(req.body);
 
-    if (req.body.tagIds.length) {
-      const productTagIdArr = req.body.tagIds.map((tag_id) => {
+    if (req.body.productIds.length) {
+ 
+      const productTagIdArr = req.body.productIds.map((product_id) => {
+   
         return {
-          tagged_id: createTag.id,
-          tag_id,
+          product_id,
+          tag_id: createTag.id,
         };
       });
      
@@ -47,7 +49,7 @@ router.post('/', async (req, res) => {
 
       res.status(200).json({ product: createTag, tags: productTagIdArr });
     } else {
-      res.status(200).json({ product: createTag, tags: "None" });
+      res.status(404).json({ product: createTag, products: "None" });
     }
 
   } catch (err) {
@@ -67,10 +69,10 @@ router.put('/:id', async (req, res) => {
     });
   
     const findAllMatch = await ProductTag.findAll({ where: { tag_id: req.params.id } });
-  
+ 
     const productTagIds = findAllMatch.map(({ product_id }) => product_id);
-  
-    const newProductTags = req.body.tagIds
+    
+    const newProductTags = req.body.productIds
     .filter((product_id) => !productTagIds.includes(product_id))
     .map((product_id) => {
       return {
@@ -80,7 +82,7 @@ router.put('/:id', async (req, res) => {
     });
   
     const productTagsToRemove = newProductTags
-          .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
+          .filter(({ tag_id }) => !req.body.productIds.includes(tag_id))
           .map(({ id }) => id);
   
     await Promise.all([
@@ -111,3 +113,4 @@ router.delete('/:id', async (req, res) => {
 });
 
 module.exports = router;
+
