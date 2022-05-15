@@ -66,16 +66,16 @@ router.put('/:id', async (req, res) => {
       },
     });
   
-    const findAllMatch = await ProductTag.findAll({ where: { product_id: req.params.id } });
+    const findAllMatch = await ProductTag.findAll({ where: { tag_id: req.params.id } });
   
-    const productTagIds = findAllMatch.map(({ tag_id }) => tag_id);
+    const productTagIds = findAllMatch.map(({ product_id }) => product_id);
   
     const newProductTags = req.body.tagIds
-    .filter((tag_id) => !productTagIds.includes(tag_id))
-    .map((tag_id) => {
+    .filter((product_id) => !productTagIds.includes(product_id))
+    .map((product_id) => {
       return {
-        product_id: req.params.id,
-        tag_id,
+        tag_id: req.params.id,
+        product_id,
       };
     });
   
