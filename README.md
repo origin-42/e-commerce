@@ -11,7 +11,7 @@
 
 </div>
 
-This application serves as a base for creating and populating an e-commerce backend with database information relative to oyur products and product categories.
+This application serves as a base for creating and populating an e-commerce backend with database information relative to your products and product categories.
 
 ## Requirements
 
